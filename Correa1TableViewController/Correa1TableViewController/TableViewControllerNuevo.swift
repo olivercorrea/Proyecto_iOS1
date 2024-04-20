@@ -7,11 +7,13 @@
 
 import UIKit
 
+/*
 class TableViewCellNuevo:UITableViewCell{
     @IBOutlet weak var etiqueta: UILabel!
     
     @IBOutlet weak var imagenNumeros: UIImageView!
 }
+*/
 
 class TableViewControllerNuevo: UITableViewController {
     
@@ -20,6 +22,9 @@ class TableViewControllerNuevo: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.isEditing = true
+        self.navigationItem.rightBarButtonItem = self.editButtonItem // Mostrar boton de edicion
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        setEditing(true, animated: true)
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -43,22 +48,22 @@ class TableViewControllerNuevo: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCellNuevo
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) //as! TableViewCellNuevo
 
         // Configure the cell...
-        cell.etiqueta?.text = arregloNumeros[indexPath.row]
-        switch cell.etiqueta?.text {
+        cell.textLabel?.text = arregloNumeros[indexPath.row]
+        switch cell.textLabel?.text {
         case "1":
-            cell.imagenNumeros?.image = UIImage(named: "ICONOS/1.png")
+            cell.imageView?.image = UIImage(named: "ICONOS/1.png")
             cell.detailTextLabel?.text = "Celda numero 1"
         case "2":
-            cell.imagenNumeros?.image = UIImage(named: "ICONOS/2.png")
+            cell.imageView?.image = UIImage(named: "ICONOS/2.png")
             cell.detailTextLabel?.text = "Celda numero 2"
         case "3":
-            cell.imagenNumeros?.image = UIImage(named: "ICONOS/3.png")
+            cell.imageView?.image = UIImage(named: "ICONOS/3.png")
             cell.detailTextLabel?.text = "Celda numero 3"
         case "4":
-            cell.imagenNumeros?.image = UIImage(named: "ICONOS/4.png")
+            cell.imageView?.image = UIImage(named: "ICONOS/4.png")
             cell.detailTextLabel?.text = "Celda numero 4"
         default:
             print("No hay mas elementos para llenar imagen")
@@ -76,7 +81,7 @@ class TableViewControllerNuevo: UITableViewController {
     }
     
 
-    
+/*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -88,15 +93,47 @@ class TableViewControllerNuevo: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
     */
 
+    // funcion para mover los elementos de TableView
+    // Override to support rearranging the table view.
+    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+        let objectoMovido = self.arregloNumeros[fromIndexPath.row]
+        arregloNumeros.remove(at: fromIndexPath.row)
+        arregloNumeros.insert(objectoMovido, at: to.row)
+        NSLog("%@", "\(fromIndexPath.row) => \(to.row) \(arregloNumeros)")
+    }
+    
+    // Funcion para editar los botones, el texto principalmente
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        if (self.isEditing) {
+            self.editButtonItem.title = "Editar"
+        }
+        else {
+            self.editButtonItem.title = "Hecho"
+        }
+    }
+    
+    // Personalisar el boton Delete
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let botonEliminar = UITableViewRowAction(style: .normal, title: "Eliminar")
+        { (accionesFila, indiceFila) in
+            self.arregloNumeros.remove(at: indexPath.row)
+            tableView.reloadData()
+        }
+        botonEliminar.backgroundColor = UIColor.red
+        
+        let botonInsertar = UITableViewRowAction(style: .normal, title: "Insertar")
+        { (accionesFila, indiceFila) in
+            let ultimoElemento = self.arregloNumeros[self.arregloNumeros.count-1]
+            tableView.reloadData()
+        }
+        botonEliminar.backgroundColor = UIColor.green
+        
+        return[botonEliminar, botonInsertar]
+    }
+    
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
