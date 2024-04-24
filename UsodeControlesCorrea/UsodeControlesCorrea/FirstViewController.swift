@@ -9,8 +9,12 @@ import UIKit
 
 class FirstViewController: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let imagen = UIImage(named: "calculador.png")
+        imageView.image = imagen
 
         // Do any additional setup after loading the view.
     }

@@ -15,6 +15,7 @@
 		193640662BD8B4AA00360365 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 193640642BD8B4AA00360365 /* LaunchScreen.storyboard */; };
 		1936406E2BD8B89500360365 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1936406D2BD8B89500360365 /* FirstViewController.swift */; };
 		193640702BD8B9E200360365 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1936406F2BD8B9E200360365 /* SecondViewController.swift */; };
+		193640722BD8CA1000360365 /* calculator.png in Resources */ = {isa = PBXBuildFile; fileRef = 193640712BD8CA1000360365 /* calculator.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		193640672BD8B4AA00360365 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1936406D2BD8B89500360365 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		1936406F2BD8B9E200360365 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		193640712BD8CA1000360365 /* calculator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = calculator.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 		193640582BD8B4A800360365 /* UsodeControlesCorrea */ = {
 			isa = PBXGroup;
 			children = (
+				193640712BD8CA1000360365 /* calculator.png */,
 				193640592BD8B4A800360365 /* AppDelegate.swift */,
 				1936405B2BD8B4A800360365 /* SceneDelegate.swift */,
 				1936405D2BD8B4A800360365 /* ViewController.swift */,
@@ -134,6 +137,7 @@
 				193640662BD8B4AA00360365 /* LaunchScreen.storyboard in Resources */,
 				193640632BD8B4AA00360365 /* Assets.xcassets in Resources */,
 				193640612BD8B4A800360365 /* Main.storyboard in Resources */,
+				193640722BD8CA1000360365 /* calculator.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
