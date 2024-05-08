@@ -9,18 +9,22 @@ import UIKit
 
 class ViewControllerTareaCompletada: UIViewController {
     
-    var tarea = Tarea()
-    
-    var anteriorVC = ViewController() // step 75
+    //var tarea = Tarea()
+    var tarea:Tarea? = nil
+    //var anteriorVC = ViewController() // step 75
     
     
     @IBOutlet weak var tareaLabel: UILabel!
     
     @IBAction func completarTarea(_ sender: Any) {
         
-        anteriorVC.tareas.remove(at: anteriorVC.indexSeleccionado)
+        //anteriorVC.tareas.remove(at: anteriorVC.indexSeleccionado)
+        //anteriorVC.tableView.reloadData()
         
-        anteriorVC.tableView.reloadData()
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        context.delete(tarea!)
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        
         navigationController?.popViewController(animated: true)
     }
     
@@ -29,10 +33,10 @@ class ViewControllerTareaCompletada: UIViewController {
 
         // Do any additional setup after loading the view.
         
-        if tarea.importante {
-            tareaLabel.text = "😇\(tarea.nombre)"
+        if tarea!.importante {
+            tareaLabel.text = "😇\(tarea!.nombre!)"
         }else{	
-            tareaLabel.text = tarea.nombre
+            tareaLabel.text = tarea!.nombre!
         }
     }
     

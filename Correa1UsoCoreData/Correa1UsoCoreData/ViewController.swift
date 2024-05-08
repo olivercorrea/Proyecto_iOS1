@@ -18,20 +18,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let tarea = tareas[indexPath.row]
         
         if tarea.importante {
-            cell.textLabel?.text = "😃\(tarea.nombre)"
+            cell.textLabel?.text = "😃\(tarea.nombre!)"
         }else{
-            cell.textLabel?.text = "😔\(tarea.nombre)"
+            cell.textLabel?.text = "😔\(tarea.nombre!)"
         }
         
         //cell.textLabel?.text = tarea.nombre
         return cell
     }
     
-    var indexSeleccionado: Int = 0 // Step 73
+    //var indexSeleccionado: Int = 0 // Step 73
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        indexSeleccionado = indexPath.row // Step 74: To know if the item shoosen in the array, so we can erase it without problems
+        //indexSeleccionado = indexPath.row // Step 74: To know if the item shoosen in the array, so we can erase it without problems
         
         let tarea = tareas[indexPath.row]
         performSegue(withIdentifier: "tareaSeleccionadaSegue", sender: tarea)
@@ -52,10 +52,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         tableView.delegate = self
         
-        tareas = crearTareas()
+        //tareas = crearTareas() // Step 91
     }
     
-    
+    /*
     func crearTareas() -> [Tarea] {
         let tarea1 = Tarea()
         tarea1.nombre = "Estudiar para el examen"
@@ -72,6 +72,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return [tarea1, tarea2, tarea3]
         
     }
+    */
+    
+    //
+    override func viewWillAppear(_ animated: Bool) {
+        obtenerTareas()
+        tableView.reloadData()
+    }
+    
+    // Llenar data que tenemos guradada en la base de datos
+    func obtenerTareas() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        do {
+            tareas = try context.fetch(Tarea.fetchRequest()) as! [Tarea]
+        } catch {
+            print("Error al leer entidad de CoreData")
+        }
+    }
     
     
     // Funcion para determianr los datos a enviar por un segue especificos
@@ -80,7 +97,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let siguenteVC = segue.destination as! ViewControllerCrearTarea
         siguenteVC.anteriorVC = self
          */
-        
+        /*
         if segue.identifier == "agregarSegue" {
             let siguienteVC = segue.destination as! ViewControllerCrearTarea
             siguienteVC.anteriorVC = self
@@ -88,6 +105,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let siguienteVC = segue.destination as! ViewControllerTareaCompletada //step 62
             siguienteVC.tarea = sender as! Tarea
             siguienteVC.anteriorVC = self // Step 76: Para determinar cual es la vista anterior
+        }
+         */
+        
+        
+        if(segue.identifier == "tareaSeleccionadaSegue"){ // step 100
+            let siguienteVC = segue.destination as! ViewControllerTareaCompletada
+            siguienteVC.tarea = sender as! Tarea
+            //siguienteVC.anteriorVC = self
         }
         
     }

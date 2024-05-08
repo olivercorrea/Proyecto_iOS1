@@ -14,14 +14,22 @@ class ViewControllerCrearTarea: UIViewController {
     @IBOutlet weak var txtNombreTarea: UITextField!
     @IBOutlet weak var swImportante: UISwitch!
     
+    
     @IBAction func agregar(_ sender: Any) {
-        let tarea = Tarea()
+        //let tarea = Tarea()
+        // se apertura uso de persistencia
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let tarea = Tarea(context: context)
+        
         tarea.nombre = txtNombreTarea.text!
         tarea.importante = swImportante.isOn
         
+        // se guarda el dato agregado a la entidad Tarea
+        (UIApplication.shared.delegate as! AppDelegate).saveContext()
+        
         // Agregar un elemento al array en el segundo ViewController
-        anteriorVC.tareas.append(tarea) // Agregamos tarea al arreglo de tareas
-        anteriorVC.tableView.reloadData() // Recargamos la data al tableView de la anterior vista
+        //anteriorVC.tareas.append(tarea) // Agregamos tarea al arreglo de tareas
+        //anteriorVC.tableView.reloadData() // Recargamos la data al tableView de la anterior vista
         navigationController?.popViewController(animated: true) // Mostramos la ultima vista referenciada a traves de nuestro NavigationController
     }
            
